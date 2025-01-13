@@ -1,0 +1,153 @@
+---
+const galleryImages = [
+    {
+        thumbnail: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1024&auto=format&fit=crop",
+        full: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=2071&auto=format&fit=crop",
+        title: "Custom Truck Body Manufacturing",
+        category: "Karoseri"
+    },
+    {
+        thumbnail: "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?q=80&w=1024&auto=format&fit=crop",
+        full: "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?q=80&w=2071&auto=format&fit=crop",
+        title: "Engine Maintenance Work",
+        category: "Maintenance"
+    },
+    {
+        thumbnail: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1024&auto=format&fit=crop",
+        full: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=2071&auto=format&fit=crop",
+        title: "Professional Body Repair",
+        category: "Body Repair"
+    },
+    {
+        thumbnail: "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?q=80&w=1024&auto=format&fit=crop",
+        full: "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?q=80&w=2071&auto=format&fit=crop",
+        title: "Bus Body Modification",
+        category: "Karoseri"
+    },
+    {
+        thumbnail: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1024&auto=format&fit=crop",
+        full: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=2071&auto=format&fit=crop",
+        title: "Diagnostic Service",
+        category: "Maintenance"
+    },
+    {
+        thumbnail: "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?q=80&w=1024&auto=format&fit=crop",
+        full: "https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?q=80&w=2071&auto=format&fit=crop",
+        title: "Paint Job Excellence",
+        category: "Body Repair"
+    }
+];
+---
+
+<section class="bg-gradient-to-b from-black to-zinc-900 py-20">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-yellow-400 mb-4">Our Work Gallery</h2>
+        <p class="text-center mb-12 text-yellow-100 max-w-3xl mx-auto">Take a look at some of our recent projects and quality workmanship.</p>
+
+        <!-- Gallery Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {galleryImages.map((image, index) => (
+                <div class="group relative cursor-pointer overflow-hidden rounded-lg" data-gallery-item>
+                    <img 
+                        src={image.thumbnail} 
+                        alt={image.title}
+                        class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500"
+                        data-full={image.full}
+                        data-title={image.title}
+                    />
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center">
+                        <p class="text-yellow-400 font-bold text-lg mb-2">{image.title}</p>
+                        <span class="bg-yellow-400 text-black text-sm font-bold px-3 py-1 rounded">
+                            {image.category}
+                        </span>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden">
+    <button id="closeLightbox" class="absolute top-4 right-4 text-yellow-400 hover:text-yellow-300 text-3xl">
+        <i class="fas fa-times"></i>
+    </button>
+    <button id="prevImage" class="absolute left-4 top-1/2 -translate-y-1/2 text-yellow-400 hover:text-yellow-300 text-4xl">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="nextImage" class="absolute right-4 top-1/2 -translate-y-1/2 text-yellow-400 hover:text-yellow-300 text-4xl">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+    <div class="flex items-center justify-center h-full">
+        <img id="lightboxImage" src="" alt="" class="max-h-[80vh] max-w-[80vw] object-contain">
+    </div>
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-center">
+        <h3 id="lightboxTitle" class="text-yellow-400 text-xl font-bold"></h3>
+    </div>
+</div>
+
+<script>
+    let currentImageIndex = 0;
+    const galleryItems = document.querySelectorAll('[data-gallery-item]');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const closeLightbox = document.getElementById('closeLightbox');
+    const prevImage = document.getElementById('prevImage');
+    const nextImage = document.getElementById('nextImage');
+
+    function showImage(index) {
+        const img = galleryItems[index].querySelector('img');
+        lightboxImage.src = img.dataset.full;
+        lightboxTitle.textContent = img.dataset.title;
+        currentImageIndex = index;
+    }
+
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            lightbox.classList.remove('hidden');
+            showImage(index);
+        });
+    });
+
+    closeLightbox.addEventListener('click', () => {
+        lightbox.classList.add('hidden');
+    });
+
+    prevImage.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+        showImage(currentImageIndex);
+    });
+
+    nextImage.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+        showImage(currentImageIndex);
+    });
+
+    // Close lightbox with escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            lightbox.classList.add('hidden');
+        }
+    });
+
+    // Navigate with arrow keys
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('hidden')) return;
+        
+        if (e.key === 'ArrowLeft') {
+            currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+            showImage(currentImageIndex);
+        } else if (e.key === 'ArrowRight') {
+            currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+            showImage(currentImageIndex);
+        }
+    });
+
+    // Close when clicking outside the image
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.add('hidden');
+        }
+    });
+</script> 

@@ -1,0 +1,151 @@
+---
+const appointmentReasons = [
+    { value: "karoseri", label: "Karoseri Service" },
+    { value: "engine_maintenance", label: "Engine Maintenance" },
+    { value: "body_repair", label: "Body Repair" },
+    { value: "brake_inspection", label: "Brake Inspection" },
+    { value: "oil_change", label: "Engine Oil & Filter Service" },
+    { value: "other", label: "Other Services" }
+];
+
+const timeSlots = [
+    "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM",
+    "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM"
+];
+---
+
+<section class="bg-zinc-900 py-20">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold text-center text-yellow-400 mb-4">Make an Appointment</h2>
+            <p class="text-center mb-12 text-yellow-100">Schedule your service appointment today. Our expert team is ready to assist you.</p>
+
+            <div class="bg-zinc-800 rounded-lg border border-yellow-400/20 p-8">
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Personal Information -->
+                    <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-yellow-100 text-sm font-bold mb-2" for="name">Full Name</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                                placeholder="Enter your full name"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-yellow-100 text-sm font-bold mb-2" for="phone">Phone Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                                placeholder="Enter your phone number"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Vehicle Information -->
+                    <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-yellow-100 text-sm font-bold mb-2" for="vehicle-make">Vehicle Make</label>
+                            <input 
+                                type="text" 
+                                id="vehicle-make" 
+                                class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                                placeholder="e.g., Toyota, Honda"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-yellow-100 text-sm font-bold mb-2" for="vehicle-model">Vehicle Model</label>
+                            <input 
+                                type="text" 
+                                id="vehicle-model" 
+                                class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                                placeholder="e.g., Camry, Civic"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Service Details -->
+                    <div>
+                        <label class="block text-yellow-100 text-sm font-bold mb-2" for="service-type">Service Type</label>
+                        <select 
+                            id="service-type" 
+                            class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                        >
+                            <option value="">Select a service</option>
+                            {appointmentReasons.map(reason => (
+                                <option value={reason.value}>{reason.label}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-yellow-100 text-sm font-bold mb-2" for="preferred-date">Preferred Date</label>
+                        <input 
+                            type="date" 
+                            id="preferred-date" 
+                            class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-yellow-100 text-sm font-bold mb-2" for="preferred-time">Preferred Time</label>
+                        <select 
+                            id="preferred-time" 
+                            class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                        >
+                            <option value="">Select preferred time</option>
+                            {timeSlots.map(time => (
+                                <option value={time}>{time}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-yellow-100 text-sm font-bold mb-2" for="transportation">Transportation</label>
+                        <select 
+                            id="transportation" 
+                            class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                        >
+                            <option value="">Select transportation option</option>
+                            <option value="wait">Wait at Shop</option>
+                            <option value="shuttle">Need Shuttle Service</option>
+                            <option value="dropoff">Will Drop Off</option>
+                            <option value="towing">Need Towing Service</option>
+                        </select>
+                    </div>
+
+                    <!-- Additional Notes -->
+                    <div class="md:col-span-2">
+                        <label class="block text-yellow-100 text-sm font-bold mb-2" for="notes">Additional Notes</label>
+                        <textarea 
+                            id="notes" 
+                            rows="4" 
+                            class="w-full bg-zinc-900 border border-yellow-400/30 rounded px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none transition-colors duration-300"
+                            placeholder="Please provide any additional details about your service needs"
+                        ></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="md:col-span-2">
+                        <button 
+                            type="submit" 
+                            class="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded transition-colors duration-300"
+                        >
+                            Schedule Appointment
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="mt-8 text-center">
+                <p class="text-yellow-100">
+                    Need immediate assistance? Call us at 
+                    <a href="tel:1900-1088" class="text-yellow-400 hover:text-yellow-300 font-bold">1900-1088</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section> 

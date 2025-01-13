@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import HeroSlider from '../components/HeroSlider.astro';
+import AboutSection from '../components/AboutSection.astro';
+import AppointmentSection from '../components/AppointmentSection.astro';
+import BlogSection from '../components/BlogSection.astro';
+import GallerySection from '../components/GallerySection.astro';
+
+const services = [
+    {
+        title: "Karoseri",
+        image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=2070&auto=format&fit=crop",
+        description: "Specialized in creating custom bodies for trucks, buses, and heavy vehicles. Our expert craftsmen combine functionality with design to deliver superior quality vehicle body solutions.",
+        features: ["Custom truck bodies", "Bus body manufacturing", "Heavy vehicle modifications", "Quality materials"]
+    },
+    {
+        title: "Engine Maintenance",
+        image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=2072&auto=format&fit=crop",
+        description: "Comprehensive engine maintenance and repair services to keep your vehicle running at peak performance. From routine maintenance to complex repairs.",
+        features: ["Engine diagnostics", "Performance tuning", "Parts replacement", "Regular maintenance"]
+    },
+    {
+        title: "Body Repair",
+        image: "https://images.unsplash.com/photo-1599256872237-5dcc0fbe9668?q=80&w=2071&auto=format&fit=crop",
+        description: "Professional auto body repair services to restore your vehicle's appearance and structural integrity. Expert color matching and dent removal.",
+        features: ["Collision repair", "Paint services", "Dent removal", "Frame straightening"]
+    }
+];
+---
+
+<Layout title="Dalbo Kencana Kreasi - Auto Repair Services">
+	<Header />
+	
+	<main class="bg-black text-yellow-100">
+		<HeroSlider />
+		
+		<!-- About Section has bg-zinc-900 -->
+		<AboutSection />
+
+		<!-- Services Section with darker background -->
+		<section class="bg-gradient-to-b from-black to-zinc-900 py-20">
+			<div class="container mx-auto px-6">
+				<h2 class="text-4xl font-bold text-center text-yellow-400 mb-4">Our Services</h2>
+				<p class="text-center mb-12 text-yellow-100 max-w-3xl mx-auto">Comprehensive automotive solutions tailored to your needs. From custom vehicle bodies to expert repairs, we've got you covered.</p>
+				
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					{services.map((service) => (
+						<div class="bg-zinc-800/50 backdrop-blur-sm rounded-lg overflow-hidden border border-yellow-400/20 hover:border-yellow-400/40 transition-all duration-300 group">
+							<div class="relative h-48 overflow-hidden">
+								<img 
+									src={service.image} 
+									alt={service.title}
+									class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+								/>
+								<div class="absolute inset-0 bg-gradient-to-t from-zinc-900/90 to-transparent"></div>
+								<h3 class="absolute bottom-4 left-4 text-2xl font-bold text-yellow-400">{service.title}</h3>
+							</div>
+							<div class="p-6">
+								<p class="text-yellow-100 mb-4">{service.description}</p>
+								<ul class="space-y-2">
+									{service.features.map((feature) => (
+										<li class="flex items-center text-yellow-100">
+											<i class="fas fa-check-circle text-yellow-400 mr-2 text-sm"></i>
+											{feature}
+										</li>
+									))}
+								</ul>
+								<button class="mt-6 w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 px-4 rounded transition-colors duration-300">
+									Learn More
+								</button>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<AppointmentSection />
+		<BlogSection />
+		<GallerySection />
+
+		
+
+		<!-- Testimonials Section -->
+		<section class="bg-zinc-900 py-20">
+			<div class="container mx-auto px-6">
+				<h2 class="text-3xl font-bold text-center mb-8 text-yellow-400">See Why our Customers Love us</h2>
+				<div class="overflow-x-auto">
+					<div class="flex space-x-6 scroll-smooth pb-4">
+						{[1, 2, 3, 4, 5].map((index) => (
+							<div class="bg-black/50 backdrop-blur-sm border border-yellow-400/30 shadow-lg rounded-lg p-6 min-w-[300px] flex-shrink-0 hover:border-yellow-400/60 transition-colors duration-300">
+								<div class="flex items-center mb-4">
+									<i class="fas fa-quote-left text-yellow-400 mr-2"></i>
+									<p class="text-yellow-100">
+										{index % 2 === 0 
+											? "I just had to get the tires changes ( winter to summer ) - very quick."
+											: "As always, very good service for the Recall notice, and some service also done at the same time."
+										}
+									</p>
+								</div>
+								<div class="flex items-center mt-4">
+									<img src={`https://placehold.co/50x50/111111/FFDB4D?text=P`} alt={`User ${index}`} class="w-10 h-10 rounded-full mr-2 border border-yellow-400/30" />
+									<div>
+										<p class="font-semibold text-yellow-400">Patrick Webster</p>
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+					<div class="text-center mt-6">
+						<a href="#" class="text-yellow-400 hover:text-yellow-300 transition-colors duration-300">View all Reviews</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Contact Section -->
+		<section class="bg-gradient-to-b from-black to-zinc-900 py-20">
+			<div class="container mx-auto px-6">
+				<h2 class="text-3xl font-bold text-center mb-8 text-yellow-400">Dalbo Kencana Kreasi</h2>
+				<div class="max-w-3xl mx-auto text-center">
+					<p class="mb-8 text-yellow-100">Honest And Fair. To Provide an Honest Auto Repair Shop for the Michigan area with Great Customer Service!</p>
+					<div class="flex justify-center mt-8 flex-wrap gap-8">
+						<div class="bg-black/30 backdrop-blur-sm p-6 rounded-lg border border-yellow-400/20">
+							<h3 class="font-semibold text-yellow-400">Customer Support</h3>
+							<p class="text-yellow-100">(021) 3874 6006</p>
+							<p class="text-yellow-100">info@example.com</p>
+						</div>
+						<div class="bg-black/30 backdrop-blur-sm p-6 rounded-lg border border-yellow-400/20">
+							<h3 class="font-semibold text-yellow-400">Visit Showroom</h3>
+							<p class="text-yellow-100">Jl Raya Cileungsi-Jonggol KM 10 RT 007 Kampung Tengah</p>
+							<p class="text-yellow-100">Cileungsi Bogor Jawa Barat</p>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</section>
+
+		<footer class="bg-black border-t border-yellow-400/30 text-yellow-100 py-6">
+			<div class="container mx-auto text-center">
+				© 2024 FixLab. All rights reserved.
+			</div>
+		</footer>
+	</main>
+</Layout>
