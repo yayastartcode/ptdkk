@@ -7,6 +7,10 @@ import AppointmentSection from '../components/AppointmentSection.astro';
 import BlogSection from '../components/BlogSection.astro';
 import GallerySection from '../components/GallerySection.astro';
 
+// You can uncomment and modify this when you have a logo image
+// const logoImage = "/path/to/your/logo.png";
+const logoText = "Dalbo Kencana Kreasi";
+
 const services = [
     {
         title: "Karoseri",
@@ -30,7 +34,7 @@ const services = [
 ---
 
 <Layout title="Dalbo Kencana Kreasi - Auto Repair Services">
-	<Header />
+	<Header logoText={logoText} />
 	
 	<main class="bg-black text-yellow-100">
 		<HeroSlider />
@@ -140,7 +144,7 @@ const services = [
 
 		<footer class="bg-black border-t border-yellow-400/30 text-yellow-100 py-6">
 			<div class="container mx-auto text-center">
-				© 2024 FixLab. All rights reserved.
+				© 2024 PT Dalbo Kencana Kreasi. All rights reserved.
 			</div>
 		</footer>
 	</main>

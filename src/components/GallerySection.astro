@@ -46,7 +46,7 @@ const galleryImages = [
 
         <!-- Gallery Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {galleryImages.map((image, index) => (
+            {galleryImages.map((image) => (
                 <div class="group relative cursor-pointer overflow-hidden rounded-lg" data-gallery-item>
                     <img 
                         src={image.thumbnail} 
@@ -88,38 +88,44 @@ const galleryImages = [
 
 <script>
     let currentImageIndex = 0;
-    const galleryItems = document.querySelectorAll('[data-gallery-item]');
+    const galleryItems = document.querySelectorAll<HTMLElement>('[data-gallery-item]');
     const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxImage = document.getElementById('lightboxImage') as HTMLImageElement;
     const lightboxTitle = document.getElementById('lightboxTitle');
     const closeLightbox = document.getElementById('closeLightbox');
     const prevImage = document.getElementById('prevImage');
     const nextImage = document.getElementById('nextImage');
 
-    function showImage(index) {
-        const img = galleryItems[index].querySelector('img');
-        lightboxImage.src = img.dataset.full;
-        lightboxTitle.textContent = img.dataset.title;
+    function showImage(index: number) {
+        const img = galleryItems[index]?.querySelector('img');
+        if (!img || !lightboxImage || !lightboxTitle) return;
+        
+        const fullImage = img.dataset.full;
+        const title = img.dataset.title;
+        
+        if (fullImage) lightboxImage.src = fullImage;
+        if (title) lightboxTitle.textContent = title;
         currentImageIndex = index;
     }
 
     galleryItems.forEach((item, index) => {
         item.addEventListener('click', () => {
+            if (!lightbox) return;
             lightbox.classList.remove('hidden');
             showImage(index);
         });
     });
 
-    closeLightbox.addEventListener('click', () => {
-        lightbox.classList.add('hidden');
+    closeLightbox?.addEventListener('click', () => {
+        lightbox?.classList.add('hidden');
     });
 
-    prevImage.addEventListener('click', () => {
+    prevImage?.addEventListener('click', () => {
         currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
         showImage(currentImageIndex);
     });
 
-    nextImage.addEventListener('click', () => {
+    nextImage?.addEventListener('click', () => {
         currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
         showImage(currentImageIndex);
     });
@@ -127,13 +133,13 @@ const galleryImages = [
     // Close lightbox with escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            lightbox.classList.add('hidden');
+            lightbox?.classList.add('hidden');
         }
     });
 
     // Navigate with arrow keys
     document.addEventListener('keydown', (e) => {
-        if (lightbox.classList.contains('hidden')) return;
+        if (!lightbox || lightbox.classList.contains('hidden')) return;
         
         if (e.key === 'ArrowLeft') {
             currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
@@ -145,9 +151,18 @@ const galleryImages = [
     });
 
     // Close when clicking outside the image
-    lightbox.addEventListener('click', (e) => {
+    lightbox?.addEventListener('click', (e) => {
         if (e.target === lightbox) {
             lightbox.classList.add('hidden');
         }
     });
-</script> 
+</script>
+
+<style>
+    .slide {
+        z-index: 0;
+    }
+    .slide.opacity-100 {
+        z-index: 1;
+    }
+</style> 
